@@ -53,12 +53,12 @@ services:
   adminer:
     restart: "no"
     ports:
-      - "8080:8080"
+      - "28080:8080"
 
   backend:
     restart: "no"
     ports:
-      - "8000:8000"
+      - "28000:8000"
     build:
       context: ./backend
     # command: sleep infinity  # Infinite loop to keep container alive doing nothing
@@ -89,17 +89,17 @@ services:
   mailcatcher:
     image: schickling/mailcatcher
     ports:
-      - "1080:1080"
-      - "1025:1025"
+      - "21080:1080"
+      - "21025:1025"
 
   frontend:
     restart: "no"
     ports:
-      - "5173:80"
+      - "25173:80"
     build:
       context: ./frontend
       args:
-        - VITE_API_URL=http://localhost:8000
+        - VITE_API_URL=http://api.${DOMAIN?Variable not set}
         - NODE_ENV=development
 
   playwright:
@@ -125,7 +125,7 @@ services:
       - ./frontend/blob-report:/app/blob-report
       - ./frontend/test-results:/app/test-results
     ports:
-      - 9323:9323
+      - 29323:9323
 
 networks:
   traefik-public:
